@@ -1,3 +1,6 @@
+#ifndef LIST_H
+#define LIST_H
+
 #include <stdio.h>
 
 const size_t MAX_KEY_SIZE = 32;
@@ -19,3 +22,5 @@ void  list_init  (List *list);
 void  list_dtor  (List *list);
 void  list_insert(List *list, char *key, char *value);
 char *list_find  (List *list, char *key);
+
+#endif 

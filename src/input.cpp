@@ -4,8 +4,8 @@
 
 #include "input.h"
 
-static size_t shift_to_next_string(char *ptr);
 static int prepare_pairs(char *input_ptr, size_t size);
+static size_t shift_to_next_string(char *ptr);
 static size_t count_elements_in_file(const char *filename);
 static size_t read_file(char *dest, size_t size, const char* filename);
 static size_t skip_to_newline(char *pointer);

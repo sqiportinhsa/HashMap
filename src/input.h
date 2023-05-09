@@ -1,3 +1,6 @@
+#ifndef INPUT_H
+#define INPUT_H
+
 #include "hashmap.h"
 
 struct Input {
@@ -7,3 +10,5 @@ struct Input {
 
 Input get_input(char *filename);
 void fill_hashmap(Input input, HashMap *hashmap);
+
+#endif
