@@ -8,7 +8,7 @@ struct Input {
     size_t size = 0;
 };
 
-Input get_input(char *filename);
+Input get_input(const char *filename);
 void fill_hashmap(Input input, HashMap *hashmap);
 
 #endif

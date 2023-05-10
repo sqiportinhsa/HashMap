@@ -10,7 +10,7 @@ static size_t count_elements_in_file(const char *filename);
 static size_t read_file(char *dest, size_t size, const char* filename);
 static size_t skip_to_newline(char *pointer);
 
-Input get_input(char *filename) {
+Input get_input(const char *filename) {
     Input input = {};
     input.size = count_elements_in_file(filename);
     input.data = (char*) calloc(input.size, sizeof(char));
@@ -32,6 +32,8 @@ void fill_hashmap(Input input, HashMap *hashmap) {
 
         hashmap_insert(hashmap, key, value);
     }
+
+    hashmap->input = input.data;
 }
 
 static size_t shift_to_next_string(char *ptr) {
