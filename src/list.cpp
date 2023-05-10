@@ -14,7 +14,6 @@ void list_init(List *list) {
 
 void list_dtor(List *list) {
     free(list->nodes);
-    free(list);
 }
 
 void list_insert(List *list, char *key, char *value) {
@@ -28,7 +27,7 @@ void list_insert(List *list, char *key, char *value) {
     ++list->size;
 };
 
-char *list_find(List *list, char *key) {
+char *list_find(List *list, const char *key) {
     char *value = nullptr;
     for (size_t i = 0; i < list->size; ++i) {
         if (!strcmp(list->nodes[i].key, key)) {
@@ -43,6 +42,7 @@ static void list_resize(List *list) {
     if (!list->nodes) {
         list->nodes = (Node*) calloc(INITIAL_LIST_SIZE, sizeof(Node));
         list->max_size = INITIAL_LIST_SIZE;
+        return;
     }
 
     list->nodes = (Node*) realloc(list->nodes, list->max_size * 2 * sizeof(Node));

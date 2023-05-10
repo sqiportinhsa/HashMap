@@ -21,6 +21,6 @@ struct List {
 void  list_init  (List *list);
 void  list_dtor  (List *list);
 void  list_insert(List *list, char *key, char *value);
-char *list_find  (List *list, char *key);
+char *list_find  (List *list, const char *key);
 
 #endif 
