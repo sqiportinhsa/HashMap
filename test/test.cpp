@@ -10,7 +10,7 @@ static bool check_hash(HashMap *hashmap);
 static bool check_hash(List *list, hash_t (*hashfunc)(const char *key), hash_t correct_hash);
 
 const size_t HASHMAP_SIZE = 5;
-const char *DATA_FILENAME = "../data/small.txt";
+const char *DATA_FILENAME = "../data/vova.txt";
 
 void check_hashmap(hash_t (*hashfunc)(const char *key)) {
     HashMap *hashmap = hashmap_init(hashfunc, HASHMAP_SIZE);
@@ -48,6 +48,10 @@ static bool check_pairs(Input input, HashMap *hashmap) {
         if(!check_pair(hashmap, key, value)) {
             correct = false;
         }
+
+        if (shift % 1000 == 0) {
+            printf("%zu\n", shift);
+        }
     }
 
     return correct;
@@ -55,12 +59,18 @@ static bool check_pairs(Input input, HashMap *hashmap) {
 
 static bool check_pair(HashMap *hashmap, const char *key, const char *value) {
     char *found = hashmap_find(hashmap, key);
+    if (!found) {
+        fprintf(stderr, "error: value not found.\n"
+                    "key: %s. expected value: %s\n", key, value);
+        return false;
+    }
+
     if (!strcmp(value, found)) {
         return true;
     }
 
     fprintf(stderr, "error: value in dictionary and value in hashmap don't match.\n"
-                    "key: %s. expected value: %s. got: %s", key, value, found);
+                    "key: %s. expected value: %s. got: %s\n", key, value, found);
     return false;
 }
 
@@ -84,7 +94,7 @@ static bool check_hash(List *list, hash_t (*hashfunc)(const char *key), hash_t c
         if (hash != correct_hash) {
             correct = false;
             fprintf(stderr, "error: node with inappropriate hash in list\n"
-                            "key: %s. expected hash: %u. got: %u", 
+                            "key: %s. expected hash: %u. got: %u\n", 
                             list->nodes[i].key, correct_hash, hash);
         }
     }
