@@ -36,6 +36,7 @@ char *hashmap_find(HashMap *hashmap, const char *key) {
 void hashmap_dtor(HashMap *hashmap) {
     free_lists(hashmap->array, hashmap->array_size);
     free(hashmap->array);
+    free(hashmap->input);
     free(hashmap);
 }
 

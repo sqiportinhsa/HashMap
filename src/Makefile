@@ -10,16 +10,19 @@ FLAGS = $(DEBUG_FLAGS)
 
 CC=gcc
 
-all: a1
+all: hashmap
 
 clean:
-	find . -name "*.o" -delete
+	find .. -name "*.o" -delete
 
 folders:
 	mkdir -p $(Folders)
 
-a1: ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o
-	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/main.o ../obj/hash.o -o ../build/a1 $(FLAGS)
+hashmap: ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o
+	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/main.o ../obj/hash.o -o ../build/hashmap $(FLAGS)
+
+tests: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/tests.o ../obj/tests_main.o
+	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/tests.o ../obj/tests_main.o -o ../build/test $(FLAGS)
 
 ../obj/hashmap.o: hashmap.cpp hashmap.h hash.h list.h input.h
 	$(CC) -c hashmap.cpp -o ../obj/hashmap.o  $(FLAGS)
@@ -35,3 +38,9 @@ a1: ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o
 
 ../obj/list.o: list.cpp list.h
 	$(CC) -c list.cpp -o ../obj/list.o $(FLAGS)
+
+../obj/tests.o: ../test/test.cpp ../test/test.h
+	$(CC) -c ../test/test.cpp -o ../obj/tests.o $(FLAGS)
+
+../obj/tests_main.o: ../test/main.cpp ../test/test.h hashmap.h hash.h input.h
+	$(CC) -c ../test/main.cpp -o ../obj/tests_main.o  $(FLAGS)

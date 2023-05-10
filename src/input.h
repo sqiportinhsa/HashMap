@@ -10,5 +10,6 @@ struct Input {
 
 Input get_input(const char *filename);
 void fill_hashmap(Input input, HashMap *hashmap);
+size_t shift_to_next_string(char *ptr);
 
 #endif

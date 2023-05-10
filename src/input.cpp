@@ -5,7 +5,6 @@
 #include "input.h"
 
 static int prepare_pairs(char *input_ptr, size_t size);
-static size_t shift_to_next_string(char *ptr);
 static size_t count_elements_in_file(const char *filename);
 static size_t read_file(char *dest, size_t size, const char* filename);
 static size_t skip_to_newline(char *pointer);
@@ -36,7 +35,7 @@ void fill_hashmap(Input input, HashMap *hashmap) {
     hashmap->input = input.data;
 }
 
-static size_t shift_to_next_string(char *ptr) {
+size_t shift_to_next_string(char *ptr) {
     size_t shift = skip_to_newline(ptr);
     *(ptr + shift) = '\0';
     ++shift;

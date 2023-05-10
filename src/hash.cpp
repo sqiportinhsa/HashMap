@@ -63,7 +63,7 @@ hash_t gnu_hash(const char *key) {
     hash_t hash = 5381;
     char sym = *key;
 
-    while (key != 0) {
+    while (sym != 0) {
         hash = ((hash << 5) + hash) + sym;
         ++key;
         sym = *key;
