@@ -5,11 +5,13 @@
 #include "hash.h"
 #include "input.h"
 
+const char *INPUT_FILENAME = "../data/big2.txt";
+
 int main() {
     HashMap *hashmap = hashmap_init(const_hash, 5);
-    Input input = get_input("../data/small.txt");
+    Input input = get_input(INPUT_FILENAME);
     fill_hashmap(input, hashmap);
-    printf("%s %s\n", hashmap_find(hashmap, "hello"), hashmap_find(hashmap, "world"));
+    printf("%s %s!\n", hashmap_find(hashmap, "Hello"), hashmap_find(hashmap, "World"));
     hashmap_dtor(hashmap);
     return 0;
 }
