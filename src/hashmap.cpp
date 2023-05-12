@@ -23,12 +23,12 @@ HashMap *hashmap_init(hashfunc_t hashfunc, size_t array_size) {
     return map;
 }
 
-void hashmap_insert(HashMap *hashmap, char *key, char *value) {
+void hashmap_insert(HashMap *hashmap, const char *key, const char *value) {
     hash_t hash = hashmap->hashfunc(key) % hashmap->array_size;
     list_insert(hashmap->array + hash, key, value);
 }
 
-char *hashmap_find(HashMap *hashmap, const char *key) {
+const char *hashmap_find(HashMap *hashmap, const char *key) {
     hash_t hash = hashmap->hashfunc(key) % hashmap->array_size;
     return list_find(hashmap->array + hash, key);
 }
@@ -36,7 +36,6 @@ char *hashmap_find(HashMap *hashmap, const char *key) {
 void hashmap_dtor(HashMap *hashmap) {
     free_lists(hashmap->array, hashmap->array_size);
     free(hashmap->array);
-    free(hashmap->input);
     free(hashmap);
 }
 

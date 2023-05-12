@@ -31,8 +31,6 @@ void fill_hashmap(Input input, HashMap *hashmap) {
 
         hashmap_insert(hashmap, key, value);
     }
-
-    hashmap->input = input.data;
 }
 
 size_t shift_to_next_string(char *ptr) {

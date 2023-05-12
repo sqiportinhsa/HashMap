@@ -16,7 +16,7 @@ void list_dtor(List *list) {
     free(list->nodes);
 }
 
-void list_insert(List *list, char *key, char *value) {
+void list_insert(List *list, const char *key, const char *value) {
     if (list->size == list->max_size) {
         list_resize(list);
         assert(list->nodes);
@@ -27,8 +27,8 @@ void list_insert(List *list, char *key, char *value) {
     ++list->size;
 };
 
-char *list_find(List *list, const char *key) {
-    char *value = nullptr;
+const char *list_find(List *list, const char *key) {
+    const char *value = nullptr;
     for (size_t i = 0; i < list->size; ++i) {
         if (!strcmp(list->nodes[i].key, key)) {
             value = list->nodes[i].value;

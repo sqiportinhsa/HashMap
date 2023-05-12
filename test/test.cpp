@@ -58,7 +58,7 @@ static bool check_pairs(Input input, HashMap *hashmap) {
 }
 
 static bool check_pair(HashMap *hashmap, const char *key, const char *value) {
-    char *found = hashmap_find(hashmap, key);
+    const char *found = hashmap_find(hashmap, key);
     if (!found) {
         fprintf(stderr, "error: value not found.\n"
                     "key: %s. expected value: %s\n", key, value);
