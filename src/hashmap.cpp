@@ -5,7 +5,7 @@
 static void init_lists(List *array, size_t size);
 static void free_lists(List *array, size_t size);
 
-HashMap *hashmap_init(hash_t (*hashfunc)(const char *key), size_t array_size) {
+HashMap *hashmap_init(hashfunc_t hashfunc, size_t array_size) {
     HashMap *map = (HashMap*) calloc(1, sizeof(HashMap));
     if (!map) return nullptr;
 

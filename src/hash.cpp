@@ -19,12 +19,12 @@ hash_t first_char_hash(const char *key) {
 hash_t char_sum_hash(const char *key) {
     assert(key);
     hash_t sum = 0;
-    hash_t sym = *key;
+    hash_t symbol = *key;
 
-    while (sym != 0) {
-        sum += sym;
+    while (symbol != 0) {
+        sum += symbol;
         ++key;
-        sym = *key;
+        symbol = *key;
     }
 
     return sum;
