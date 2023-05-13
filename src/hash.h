@@ -23,7 +23,7 @@ const hashfunc_t HASHFUNCS[] = {const_hash,
 
 const size_t HASHFUNCS_SIZE = sizeof(HASHFUNCS) / sizeof(hashfunc_t);
 
-const char* HASHFUNC_NAMES[] = {"const hash", 
+const char* const HASHFUNC_NAMES[] = {"const hash", 
                            "first_char_hash",
                              "char_sum_hash",
                                   "rol_hash",
