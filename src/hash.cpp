@@ -6,6 +6,9 @@
 static hash_t rol(hash_t val);
 static hash_t ror(hash_t val);
 
+const size_t BIT_PER_BYTE = 8;
+const size_t SHIFT = sizeof(hash_t) * BIT_PER_BYTE - 1;
+
 hash_t const_hash(const char *key) {
     assert(key);
     return 1;
@@ -93,13 +96,11 @@ hash_t crc32_hash(const char *key) {
 }
 
 static hash_t rol(hash_t val) {
-    size_t shift = sizeof(hash_t) << 3 - 1;
-    hash_t new_val = (val << 1) | (val >> shift);
+    hash_t new_val = (val << 1) | (val >> SHIFT);
     return new_val;
 }
 
 static hash_t ror(hash_t val) {
-    size_t shift = sizeof(hash_t) << 3 - 1;
-    hash_t new_val = (val >> 1) | (val << shift);
+    hash_t new_val = (val >> 1) | (val << SHIFT);
     return new_val;
 }
