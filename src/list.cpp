@@ -24,8 +24,8 @@ void list_insert(List *list, const char *key, const char *value) {
 
     list->nodes[list->size].value = value;
     strncpy(list->nodes[list->size].key, key, MAX_KEY_SIZE);
-    ++list->size;
-};
+    ++(list->size);
+}
 
 const char *list_find(List *list, const char *key) {
     const char *value = nullptr;
