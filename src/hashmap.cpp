@@ -24,6 +24,8 @@ HashMap *hashmap_create(hashfunc_t hashfunc, size_t array_size) {
 }
 
 void hashmap_insert(HashMap *hashmap, const char *key, const char *value) {
+    if (hashmap_find(hashmap, key)) return;
+
     hash_t hash = hashmap->hashfunc(key) % hashmap->array_size;
     list_insert(hashmap->array + hash, key, value);
 }

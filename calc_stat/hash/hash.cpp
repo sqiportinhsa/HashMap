@@ -4,7 +4,7 @@
 
 #include "hash.h"
 
-const size_t HASHMAP_SIZE = 16127; 
+const size_t HASHMAP_SIZE = 9901; 
 const double CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
 const int REPEAT_TIMES = 100;
 

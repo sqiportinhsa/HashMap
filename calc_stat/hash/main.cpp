@@ -2,7 +2,7 @@
 
 #include "hash.h"
 
-const char *DATA_FILENAME = "../data/big2.txt";
+const char *DATA_FILENAME = "../data/big.txt";
 
 int main() {
     Input input = get_input(DATA_FILENAME);
