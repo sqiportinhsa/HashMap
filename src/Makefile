@@ -8,7 +8,7 @@ DEBUG_FLAGS = -march=native -D _DEBUG -ggdb3 -std=c++2a -O0 -Wall -Wextra -Weffc
 
 FLAGS = $(DEBUG_FLAGS)
 
-CC=gcc
+CC = gcc
 
 all: hashmap
 
@@ -19,10 +19,13 @@ folders:
 	mkdir -p $(Folders)
 
 hashmap: ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o
-	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/main.o ../obj/hash.o -o ../build/hashmap $(FLAGS)
+	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o -o ../build/hashmap $(FLAGS)
 
 tests: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/tests.o ../obj/tests_main.o
 	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/tests.o ../obj/tests_main.o -o ../build/test $(FLAGS)
+
+hashstat: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o 
+	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o -o ../build/hashstat $(FLAGS)
 
 ../obj/hashmap.o: hashmap.cpp hashmap.h hash.h list.h input.h
 	$(CC) -c hashmap.cpp -o ../obj/hashmap.o  $(FLAGS)
@@ -44,3 +47,9 @@ tests: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/tests.
 
 ../obj/tests_main.o: ../test/main.cpp ../test/test.h hashmap.h hash.h input.h
 	$(CC) -c ../test/main.cpp -o ../obj/tests_main.o  $(FLAGS)
+
+../obj/hashstat.o: ../calc_stat/hash/hash.cpp ../calc_stat/hash/hash.h
+	$(CC) -c ../calc_stat/hash/hash.cpp -o ../obj/hashstat.o $(FLAGS)
+
+../obj/hashstat_main.o: ../calc_stat/hash/main.cpp ../calc_stat/hash/hash.h hashmap.h hash.h input.h
+	$(CC) -c ../calc_stat/hash/main.cpp -o ../obj/hashstat_main.o  $(FLAGS)
