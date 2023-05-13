@@ -9,6 +9,8 @@ static hash_t ror(hash_t val);
 const size_t BIT_PER_BYTE = 8;
 const size_t SHIFT = sizeof(hash_t) * BIT_PER_BYTE - 1;
 
+const hash_t CRC32_CONST = 0x04C11DB7;
+
 hash_t const_hash(const char *key) {
     assert(key);
     return 1;
@@ -85,7 +87,7 @@ hash_t crc32_hash(const char *key) {
 
         for (int j = 7; j >= 0; j--) {
             mask = -(crc & 1);
-            crc = (crc >> 1) ^ (0x82608EDB & mask);
+            crc = (crc >> 1) ^ (CRC32_CONST & mask);
         }
 
         ++key;
