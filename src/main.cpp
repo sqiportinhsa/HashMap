@@ -13,5 +13,6 @@ int main() {
     fill_hashmap(input, hashmap);
     printf("%s %s!\n", hashmap_find(hashmap, "Hello"), hashmap_find(hashmap, "World"));
     hashmap_dtor(hashmap);
+    free(input.data);
     return 0;
 }
