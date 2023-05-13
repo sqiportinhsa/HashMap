@@ -9,10 +9,10 @@ static bool check_pair (HashMap *hashmap, const char *key, const char *value);
 static bool check_hash(HashMap *hashmap);
 static bool check_hash(List *list, hashfunc_t hashfunc, hash_t correct_hash);
 
-const size_t HASHMAP_SIZE = 5;
+const size_t HASHMAP_SIZE = 16127;
 
 void check_hashmap(hashfunc_t hashfunc, Input input) {
-    HashMap *hashmap = hashmap_init(hashfunc, HASHMAP_SIZE);
+    HashMap *hashmap = hashmap_create(hashfunc, HASHMAP_SIZE);
     fill_hashmap(input, hashmap);
     check_hashmap(hashmap, input);
     hashmap_dtor(hashmap);
