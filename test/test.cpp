@@ -10,11 +10,9 @@ static bool check_hash(HashMap *hashmap);
 static bool check_hash(List *list, hashfunc_t hashfunc, hash_t correct_hash);
 
 const size_t HASHMAP_SIZE = 5;
-const char *DATA_FILENAME = "../data/vova.txt";
 
-void check_hashmap(hashfunc_t hashfunc) {
+void check_hashmap(hashfunc_t hashfunc, Input input) {
     HashMap *hashmap = hashmap_init(hashfunc, HASHMAP_SIZE);
-    Input input = get_input(DATA_FILENAME);
     fill_hashmap(input, hashmap);
     check_hashmap(hashmap, input);
     hashmap_dtor(hashmap);
@@ -47,10 +45,6 @@ static bool check_pairs(Input input, HashMap *hashmap) {
 
         if(!check_pair(hashmap, key, value)) {
             correct = false;
-        }
-
-        if (shift % 1000 == 0) {
-            printf("%zu\n", shift);
         }
     }
 
