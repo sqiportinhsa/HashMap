@@ -6,7 +6,7 @@
 
 const size_t HASHMAP_SIZE = 4013; 
 const double CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
-const int REPEAT_TIMES = 100;
+const size_t REPEAT_TIMES = 100;
 
 static double get_time(hashfunc_t hashfunc, Keys keys);
 static Keys   get_keys(Input input);
@@ -63,7 +63,7 @@ static double get_time(hashfunc_t hashfunc, Keys keys) {
     volatile hash_t hash = 0;
 
     clock_t begin = clock();
-    for (int t = 0; t < REPEAT_TIMES; ++t) {
+    for (size_t t = 0; t < REPEAT_TIMES; ++t) {
         for (size_t i = 0; i < keys.size; ++i) {
             hash = hashfunc(keys.data[i]);
         }
@@ -83,7 +83,7 @@ static Keys get_keys(Input input) {
         char *key = input.data + shift;
         shift += shift_to_next_string(input.data + shift);
 
-        char *value = input.data + shift;
+        // char *value = input.data + shift; - shift->value; skip value:
         shift += shift_to_next_string(input.data + shift);
 
         keys.data[keys.size] = key;

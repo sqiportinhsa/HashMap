@@ -18,13 +18,14 @@ hash_t const_hash(const char *key) {
 
 hash_t first_char_hash(const char *key) {
     assert(key);
-    return *key;
+    char first_char = *key;
+    return first_char;
 }
 
 hash_t char_sum_hash(const char *key) {
     assert(key);
     hash_t sum = 0;
-    hash_t symbol = *key;
+    char symbol = *key;
 
     while (symbol != 0) {
         sum += symbol;

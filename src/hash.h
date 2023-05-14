@@ -1,7 +1,10 @@
 #ifndef HASH_H
 #define HASH_H
 
-typedef unsigned int hash_t;
+#include <stdint.h>
+#include <stdio.h>
+
+typedef uint32_t hash_t;
 
 typedef hash_t (*hashfunc_t)(const char *key);
 
