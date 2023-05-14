@@ -64,7 +64,7 @@ static bool check_pair(HashMap *hashmap, const char *key, const char *value) {
     }
 
     fprintf(stderr, "error: value in dictionary and value in hashmap don't match.\n"
-                    "key: %s. expected value: %s. got: %s\n", key, value, found);
+                    "key: <%s>. expected value: <%s>. got: <%s>\n", key, value, found);
     return false;
 }
 
