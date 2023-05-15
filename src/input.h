@@ -8,8 +8,18 @@ struct Input {
     size_t size = 0;
 };
 
+struct Pair {
+    const char *key;
+    const char *value;
+};
+
+struct Pairs {
+    Pair  *pairs;
+    size_t pairs_amount;
+};
+
 Input get_input(const char *filename);
-void fill_hashmap(Input input, HashMap *hashmap);
-size_t shift_to_next_string(char *ptr);
+Pairs get_pairs(Input input);
+void fill_hashmap(Pairs dict, HashMap *hashmap);
 
 #endif
