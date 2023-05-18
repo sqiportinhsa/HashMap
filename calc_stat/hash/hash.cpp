@@ -11,8 +11,8 @@ const size_t REPEAT_TIMES = 100;
 static double get_time(hashfunc_t hashfunc, Pairs pairs);
 
 static void get_and_report_distribution(hashfunc_t hashfunc, Pairs dict, const char *hashfunc_name);
-static void           print_distribution(const char *hashfunc_name, size_t *sizes);
-static void             get_distribution(List *lists,         size_t *sizes);
+static void          print_distribution(const char *hashfunc_name, size_t *sizes);
+static void            get_distribution(List *lists,               size_t *sizes);
 
 
 void get_times(double *times, Pairs dict) {

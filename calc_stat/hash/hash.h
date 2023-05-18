@@ -1,5 +1,4 @@
 #include "../../src/hashmap.h"
-#include "../../src/hashmap.h"
 #include "../../src/input.h"
 
 void print_times(double *times);
