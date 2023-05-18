@@ -9,6 +9,7 @@ int main() {
     Pairs dict  = get_pairs(input);
 
     HashMap *hashmap = hashmap_create(crc32_hash, dict.pairs_amount);
+    fill_hashmap(dict, hashmap);
     get_time(hashmap, dict);
 
     hashmap_dtor(hashmap);

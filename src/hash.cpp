@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <immintrin.h>
 #include <stdio.h>
 
 #include "hash.h"
@@ -79,23 +80,14 @@ hash_t gnu_hash(const char *key) {
 }
 
 hash_t crc32_hash(const char *key) {
-    unsigned char sym = *key;
-    unsigned int  crc = 0xFFFFFFFF; 
-    unsigned int mask = 0;
+    hash_t hash = 0;
 
-    while (sym != 0) {
-        crc = crc ^ sym;
+    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 0));
+    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 1));
+    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 2));
+    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 3));
 
-        for (int j = 7; j >= 0; j--) {
-            mask = -(crc & 1);
-            crc = (crc >> 1) ^ (CRC32_CONST & mask);
-        }
-
-        ++key;
-        sym = *key;
-    }
-
-    return ~crc;
+    return hash;
 }
 
 static hash_t rol(hash_t val) {
