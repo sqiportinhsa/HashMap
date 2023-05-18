@@ -1,9 +1,10 @@
+#include <stdlib.h>
 #include <string.h>
 #include "test.h"
 
-static bool check_hashmap(HashMap *hashmap, Input input);
+static bool check_hashmap(HashMap *hashmap, Pairs dict);
 
-static bool check_pairs(Input input, HashMap *hashmap);
+static bool check_pairs(HashMap *hashmap, Pairs pairs);
 static bool check_pair (HashMap *hashmap, const char *key, const char *value);
 
 static bool check_hash(HashMap *hashmap);
@@ -11,20 +12,24 @@ static bool check_hash(List *list, hashfunc_t hashfunc, hash_t correct_hash);
 
 const size_t HASHMAP_SIZE = 16127;
 
-void check_hashmap(hashfunc_t hashfunc, Input input) {
+void check_hashmap(hashfunc_t hashfunc, Pairs dict) {
     HashMap *hashmap = hashmap_create(hashfunc, HASHMAP_SIZE);
-    fill_hashmap(input, hashmap);
-    check_hashmap(hashmap, input);
+    fill_hashmap(dict, hashmap);
+    check_hashmap(hashmap, dict);
     hashmap_dtor(hashmap);
 }
 
-static bool check_hashmap(HashMap *hashmap, Input input) {
+int comparator(const void *pair1, const void *pair2) {
+    return strcmp(((const Pair*) pair1)->key, ((const Pair*) pair2)->key);
+}
+
+static bool check_hashmap(HashMap *hashmap, Pairs dict) {
     bool hash_correct  = check_hash(hashmap);
     if (hash_correct) {
         printf("hash checkup done successful\n");
     }
 
-    bool pairs_correct = check_pairs(input, hashmap);
+    bool pairs_correct = check_pairs(hashmap, dict);
     if (pairs_correct) {
         printf("pairs checkup done successful\n");
     }
@@ -32,18 +37,21 @@ static bool check_hashmap(HashMap *hashmap, Input input) {
     return hash_correct & pairs_correct;
 }
 
-static bool check_pairs(Input input, HashMap *hashmap) {
+static bool check_pairs(HashMap *hashmap, Pairs pairs) {
     size_t shift = 0;
     bool correct = true;
 
-    while (shift < input.size) {
-        char *key = input.data + shift;
-        shift += shift_to_next_string(input.data + shift);
+    if(!check_pair(hashmap, pairs.pairs[0].key, pairs.pairs[0].value)) {
+        correct = false;
+    }
 
-        char *value = input.data + shift;
-        shift += shift_to_next_string(input.data + shift);
+    for (size_t i = 1; i < pairs.pairs_amount; ++i) {
+        if (!strcmp(pairs.pairs[i].key, pairs.pairs[i-1].key)) {
+            continue;
+        }
 
-        if(!check_pair(hashmap, key, value)) {
+        if(!check_pair(hashmap, pairs.pairs[i].key, pairs.pairs[i].value)) {
+            check_pair(hashmap, pairs.pairs[i].key, pairs.pairs[i].value);
             correct = false;
         }
     }
@@ -55,7 +63,7 @@ static bool check_pair(HashMap *hashmap, const char *key, const char *value) {
     const char *found = hashmap_find(hashmap, key);
     if (!found) {
         fprintf(stderr, "error: value not found.\n"
-                    "key: %s. expected value: %s\n", key, value);
+                        "key: %s. expected value: %s\n", key, value);
         return false;
     }
 
@@ -64,7 +72,7 @@ static bool check_pair(HashMap *hashmap, const char *key, const char *value) {
     }
 
     fprintf(stderr, "error: value in dictionary and value in hashmap don't match.\n"
-                    "key: %s. expected value: %s. got: %s\n", key, value, found);
+                    "key: <%s>. expected value: <%s>. got: <%s>\n", key, value, found);
     return false;
 }
 

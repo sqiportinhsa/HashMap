@@ -6,24 +6,19 @@
 
 const size_t HASHMAP_SIZE = 4013; 
 const double CLOCKS_PER_MS = CLOCKS_PER_SEC / 1000;
-const int REPEAT_TIMES = 100;
+const size_t REPEAT_TIMES = 100;
 
-static double get_time(hashfunc_t hashfunc, Keys keys);
-static Keys   get_keys(Input input);
+static double get_time(hashfunc_t hashfunc, Pairs pairs);
 
-static void get_and_report_distribution(hashfunc_t hashfunc, Input input, const char *hashfunc_name);
+static void get_and_report_distribution(hashfunc_t hashfunc, Pairs dict, const char *hashfunc_name);
 static void           print_distribution(const char *hashfunc_name, size_t *sizes);
 static void             get_distribution(List *lists,         size_t *sizes);
 
 
-void get_times(Input input, double *times) {
-    Keys keys = get_keys(input);
-
+void get_times(double *times, Pairs dict) {
     for (size_t i = 0;  i < HASHFUNCS_SIZE; ++i) {
-        times[i] = get_time(HASHFUNCS[i], keys);
+        times[i] = get_time(HASHFUNCS[i], dict);
     }
-
-    free(keys.data);
 }
 
 void print_times(double *times) {
@@ -32,15 +27,15 @@ void print_times(double *times) {
     }
 }
 
-void get_and_report_all_distributions(Input input) {
+void get_and_report_all_distributions(Pairs dict) {
     for (size_t i = 0; i < HASHFUNCS_SIZE; ++i) {
-        get_and_report_distribution(HASHFUNCS[i], input, HASHFUNC_NAMES[i]);
+        get_and_report_distribution(HASHFUNCS[i], dict, HASHFUNC_NAMES[i]);
     }
 }
 
-static void get_and_report_distribution(hashfunc_t hashfunc, Input input, const char *hashfunc_name) {
+static void get_and_report_distribution(hashfunc_t hashfunc, Pairs dict, const char *hashfunc_name) {
     HashMap *hashmap = hashmap_create(hashfunc, HASHMAP_SIZE);
-    fill_hashmap(input, hashmap);
+    fill_hashmap(dict, hashmap);
     size_t sizes[HASHMAP_SIZE] = {};
     get_distribution(hashmap->array, sizes);
     print_distribution(hashfunc_name, sizes);
@@ -59,36 +54,17 @@ static void get_distribution(List *lists, size_t *sizes) {
     }
 }
 
-static double get_time(hashfunc_t hashfunc, Keys keys) {
+static double get_time(hashfunc_t hashfunc, Pairs pairs) {
     volatile hash_t hash = 0;
 
     clock_t begin = clock();
-    for (int t = 0; t < REPEAT_TIMES; ++t) {
-        for (size_t i = 0; i < keys.size; ++i) {
-            hash = hashfunc(keys.data[i]);
+    for (size_t t = 0; t < REPEAT_TIMES; ++t) {
+        for (size_t i = 0; i < pairs.pairs_amount; ++i) {
+            hash = hashfunc(pairs.pairs[i].key);
         }
     }
     clock_t end = clock();
 
     double time =  (double)(end - begin) / CLOCKS_PER_MS;
     return time;
-}
-
-static Keys get_keys(Input input) {
-    Keys keys = {};
-    size_t shift = 0;
-    keys.data = (char**) calloc(input.size / 2, sizeof(char*));
-
-    while (shift < input.size) {
-        char *key = input.data + shift;
-        shift += shift_to_next_string(input.data + shift);
-
-        char *value = input.data + shift;
-        shift += shift_to_next_string(input.data + shift);
-
-        keys.data[keys.size] = key;
-        ++keys.size;
-    }
-
-    return keys;
 }

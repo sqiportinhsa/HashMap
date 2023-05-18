@@ -1,12 +1,13 @@
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 
 #include "input.h"
 
-static int prepare_pairs(char *input_ptr, size_t size);
 static size_t count_elements_in_file(const char *filename);
 static size_t read_file(char *dest, size_t size, const char* filename);
+static size_t shift_to_next_string(char *ptr);
 static size_t skip_to_newline(char *pointer);
 
 Input get_input(const char *filename) {
@@ -19,45 +20,41 @@ Input get_input(const char *filename) {
     return input;
 }
 
-void fill_hashmap(Input input, HashMap *hashmap) {
+void fill_hashmap(Pairs dict, HashMap *hashmap) {
+    for (size_t i = 0; i < dict.pairs_amount; ++i) {
+        hashmap_insert(hashmap, dict.pairs[i].key, dict.pairs[i].value);
+    }
+}
+
+Pairs get_pairs(Input input) {
+    Pairs pairs  = {};
+    pairs.pairs  = (Pair*) calloc(input.size / 2, sizeof(Pair));
     size_t shift = 0;
 
     while (shift < input.size) {
+        size_t key_len = 0;
         char *key = input.data + shift;
-        shift += shift_to_next_string(input.data + shift);
+        key_len = shift_to_next_string(input.data + shift);
+        shift += key_len;
 
         char *value = input.data + shift;
         shift += shift_to_next_string(input.data + shift);
 
-        hashmap_insert(hashmap, key, value);
+        if (key_len <= 32) {
+            pairs.pairs[pairs.pairs_amount].key   = key;
+            pairs.pairs[pairs.pairs_amount].value = value;
+            ++pairs.pairs_amount;
+        }
     }
+
+    return pairs;
 }
 
-size_t shift_to_next_string(char *ptr) {
+static size_t shift_to_next_string(char *ptr) {
     size_t shift = skip_to_newline(ptr);
     *(ptr + shift) = '\0';
     ++shift;
     return shift;
-}
-
-static int prepare_pairs(char *input_ptr, size_t size) {
-    size_t shift = 0;
-    size_t strings_counter = 0;
-
-    // set '\0' between strings to split words & count strings
-    while (shift < size) {
-        size_t delta = skip_to_newline(input_ptr);
-        input_ptr += delta;
-        shift     += delta;
-
-        *input_ptr = '\0';
-
-        ++strings_counter;
-        ++input_ptr;
-        ++shift;
-    }
-
-    return strings_counter % 2;
 }
 
 static size_t count_elements_in_file(const char *filename) {
