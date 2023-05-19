@@ -28,19 +28,24 @@ void fill_hashmap(Pairs dict, HashMap *hashmap) {
 
 Pairs get_pairs(Input input) {
     Pairs pairs  = {};
-    pairs.pairs  = (Pair*) calloc(input.size / 2, sizeof(Pair));
+    pairs.pairs  = (Pair*) calloc(input.size / MAX_KEY_SIZE, sizeof(Pair));
     size_t shift = 0;
+    char *key   = nullptr;
+    char *value = nullptr;
 
     while (shift < input.size) {
         size_t key_len = 0;
-        char *key = input.data + shift;
-        key_len = shift_to_next_string(input.data + shift);
-        shift += key_len;
+        key = input.data + shift;
+        shift += MAX_KEY_SIZE;
 
-        char *value = input.data + shift;
+        if (*key == '\0') {
+            break;
+        }
+
+        value = input.data + shift;
         shift += shift_to_next_string(input.data + shift);
 
-        if (key_len <= 32) {
+        if (key_len <= MAX_KEY_SIZE) {
             pairs.pairs[pairs.pairs_amount].key   = key;
             pairs.pairs[pairs.pairs_amount].value = value;
             ++pairs.pairs_amount;

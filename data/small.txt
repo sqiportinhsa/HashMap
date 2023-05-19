@@ -1,3 +1,7 @@
+text
+текст
+check 
+проверка
 hello
 привет
 world

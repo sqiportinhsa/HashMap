@@ -39018,8 +39018,6 @@ dietetics
 диететика 
 dietitian
 диетсестра 
-
-дефолт
 differ
 отличаться от в 
 difference
@@ -44864,8 +44862,6 @@ en route
 по по в пути 
 en suite
 смежный 
-
-дефолт
 enable
 давать возможность или право что-л. сделать облегчать 
 enact
@@ -46585,8 +46581,6 @@ evocative device cin.
 evoke
 вызывать восхищение и т. п. истребовать 
 evolution Theory of Evolution
-
-evolutional
 эволюционный 
 evolutionary evolutional
 дефолт
@@ -48441,8 +48435,6 @@ fantoccini it.
 fanzine
 журнал для болельщиков 
 FAO Food and Agricultural Organi
-
-FAQ fair average quality
 справедливое среднее качество 
 faquir fakir
 дефолт
@@ -79070,8 +79062,6 @@ Meg dim. of Margaret
 Мег 
 mega
 в высшей степени 
-
-дефолт
 megabyte comput.
 мегабайт 
 megacycle
@@ -83967,8 +83957,6 @@ neighbour
 neighboured a beautifully neighb
 город с красивыми 
 neighbourhood in the neighbourho
-
-neighbourhood unit
 жилой район во вновь планируемых городах 
 neighbouring
 смежный 

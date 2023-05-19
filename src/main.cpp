@@ -5,7 +5,7 @@
 #include "hash.h"
 #include "input.h"
 
-const char *INPUT_FILENAME = "../data/big.txt";
+const char *INPUT_FILENAME = "../data/big_processed.txt";
 const size_t HASHMAP_SIZE = 16127;
 
 int main() {

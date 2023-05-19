@@ -18,14 +18,14 @@ clean:
 folders:
 	mkdir -p $(Folders)
 
-hashmap: ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o
-	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o -o ../build/hashmap $(FLAGS)
+hashmap: ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o ../obj/list_find.o
+	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/main.o ../obj/list.o ../obj/hash.o ../obj/list_find.o -o ../build/hashmap $(FLAGS)
 
 tests: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/tests.o ../obj/tests_main.o
 	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/tests.o ../obj/tests_main.o -o ../build/test $(FLAGS)
 
-hashstat: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o 
-	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o -o ../build/hashstat $(FLAGS)
+hashstat: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o ../obj/list_find.o
+	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o ../obj/list_find.o -o ../build/hashstat $(FLAGS)
 
 ../obj/hashmap.o: hashmap.cpp hashmap.h hash.h list.h input.h
 	$(CC) -c hashmap.cpp -o ../obj/hashmap.o  $(FLAGS)
@@ -41,6 +41,9 @@ hashstat: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/has
 
 ../obj/list.o: list.cpp list.h
 	$(CC) -c list.cpp -o ../obj/list.o $(FLAGS)
+
+../obj/list_find.o:
+	nasm -f elf64 list_find.asm -o ../obj/list_find.o
 
 ../obj/tests.o: ../test/test.cpp ../test/test.h
 	$(CC) -c ../test/test.cpp -o ../obj/tests.o $(FLAGS)
