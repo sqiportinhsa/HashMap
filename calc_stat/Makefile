@@ -19,10 +19,10 @@ folders:
 	mkdir -p $(Folders)
 
 hashstat: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o 
-	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o -o ../build/hashstat $(FLAGS)
+	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/hashstat.o ../obj/hashstat_main.o ../obj/list_find.o -o ../build/hashstat $(FLAGS)
 
 searchstat: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/searchstat.o ../obj/searchstat_main.o 
-	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/searchstat.o ../obj/searchstat_main.o -o ../build/searchstat $(FLAGS)
+	$(CC) ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/searchstat.o ../obj/searchstat_main.o ../obj/list_find.o -o ../build/searchstat $(FLAGS)
 
 ../obj/hashmap.o: ../src/hashmap.cpp ../src/hashmap.h ../src/hash.h ../src/list.h ../src/input.h
 	$(CC) -c ../src/hashmap.cpp -o ../obj/hashmap.o  $(FLAGS)
@@ -35,6 +35,9 @@ searchstat: ../obj/hashmap.o ../obj/input.o ../obj/list.o ../obj/hash.o ../obj/s
 
 ../obj/list.o: ../src/list.cpp ../src/list.h
 	$(CC) -c ../src/list.cpp -o ../obj/list.o $(FLAGS)
+
+../obj/list_find.o: ../src/list_find.asm
+	nasm -f elf64 ../src/list_find.asm -o ../obj/list_find.o
 
 ../obj/hashstat.o: hash/hash.cpp hash/hash.h ../src/hashmap.h ../src/hash.h ../src/input.h
 	$(CC) -c hash/hash.cpp -o ../obj/hashstat.o $(FLAGS)
