@@ -8,10 +8,10 @@ list_find:
 
         mov     rdi, QWORD [rdi+16]
 
+        mov eax, 0
         vmovdqu ymm0, yword   [rdi]         ; ymm0 = list->nodes[0].key
         vmovdqu ymm1, yword   [rsi]         ; ymm1 = key
         vptest  ymm0, ymm1
-        mov eax, 0
         setnc al                            ; if strcmp(ymm0, ymm1) = 0 { eax = 1 } else { eax = 0 }
 
         test    eax, eax                    ; if (!strcmp(list->nodes[0].key, key))
@@ -23,10 +23,10 @@ list_find:
 
     .nodes_loop:
         mov     rdi, rax
+        xor     ecx, ecx
         vmovdqu ymm0, yword   [rax]         ; ymm0 = list->nodes[i].key
         vmovdqu ymm1, yword   [rsi]         ; ymm1 = key
         vptest  ymm0, ymm1                  ; strcmp(ymm0, ymm1)
-        xor     ecx, ecx
         setnc   cl                          ; if strcmp(ymm0, ymm1) = 0 { ecx = 1 } else { ecx = 0 }
 
         add     rax, 40                     ; rax to next node
