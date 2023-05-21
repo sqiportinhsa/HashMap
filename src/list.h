@@ -22,6 +22,6 @@ void list_init  (List *list);
 void list_dtor  (List *list);
 void list_insert(List *list, const char *key, const char *value);
 
-const char *list_find(List *list, const char *key);
+extern "C" const char *list_find(List *list, const char *key);
 
 #endif 
