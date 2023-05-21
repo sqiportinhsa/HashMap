@@ -5,7 +5,6 @@
 #include "list.h"
 
 static void list_resize(List *list);
-static inline int __attribute__((always_inline)) strcmp_asm(const char *srt1, const char *str2);
 
 void list_init(List *list) {
     assert(list);
@@ -29,29 +28,6 @@ void list_insert(List *list, const char *key, const char *value) {
     list->nodes[list->size].value = value;
     strncpy(list->nodes[list->size].key, key, KEY_SIZE);
     ++(list->size);
-}
-
-static inline int __attribute__((always_inline)) strcmp_asm(const char *srt1, const char *str2) {
-    int res = 0;
-
-    asm(
-    ".intel_syntax noprefix\n"
-
-    "vmovdqu ymm0, ymmword ptr [%1]\n" /* ymm0 <- srt1 */
-    "vmovdqu ymm1, ymmword ptr [%2]\n" /* ymm1 <- str2 */
-
-    "vptest  ymm0, ymm1\n"             /* cf = (srt1 == str2) */
-    "mov %0, 0\n"       
-    "setnc %b0\n"
-
-    ".att_syntax prefix\n"
-
-    : "=r"(res)
-    : "r"(srt1), "r"(str2)
-    : "ymm0", "ymm1", "cc"
-    );
-
-    return res;
 }
 
 static void list_resize(List *list) {
