@@ -259,8 +259,8 @@ uint32_t gnu_hash(const char *key) {
 ```c++
 uint32_t crc32_hash(const char *key) {
     unsigned char sym = *key;
-    unsigned int  crc = 0xFFFFFFFF; 
-    unsigned int mask = 0;
+    uint32_t      crc = 0xFFFFFFFF; 
+    uint32_t     mask = 0;
 
     while (sym != 0) {
         crc = crc ^ sym;
@@ -368,12 +368,12 @@ $\Delta t$ - среднеквадратичное отклонение резу�
 Как было сказано выше, ключ является строкой размера, не превышающего 32 байта. Более того, значение хеша имеет тип `uint32_t`. Это позволяет нам воспользоваться SIMD-инструкцией `_mm_crc32_u32` быстрого вычисления хеша. Сравним реализации до и после:
 
 ```c++
-const hash_t CRC32_CONST = 0x04C11DB7;
+const uint32_t CRC32_CONST = 0x04C11DB7;
 
-hash_t crc32_hash(const char *key) {
+uint32_t crc32_hash(const char *key) {
     unsigned char sym = *key;
-    unsigned int  crc = 0xFFFFFFFF; 
-    unsigned int mask = 0;
+    uint32_t      crc = 0xFFFFFFFF; 
+    uint32_t     mask = 0;
 
     while (sym != 0) {
         crc = crc ^ sym;
@@ -392,8 +392,8 @@ hash_t crc32_hash(const char *key) {
 ```
 
 ```c++
-hash_t crc32_hash(const char *key) {
-    hash_t hash = 0;
+uint32_t crc32_hash(const char *key) {
+    uint32_t hash = 0;
 
     hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 0));
     hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 1));
@@ -403,6 +403,8 @@ hash_t crc32_hash(const char *key) {
     return hash;
 }
 ```
+
+Как и в приведенных фрагментах кода для хеш-функций в первой части, здесь выполнены подстановки `typedef` и убраны `assert`-ы.
 
 При помощи [godbolt](https://godbolt.org/z/MT75WhrKK) посмотрим на код двух этих функций на ассемблере:
 
