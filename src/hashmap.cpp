@@ -8,7 +8,7 @@ static void free_lists(List *array, size_t size);
 
 HashMap *hashmap_create(hashfunc_t hashfunc, size_t array_size) {
     assert(hashfunc);
-    
+
     HashMap *map = (HashMap*) calloc(1, sizeof(HashMap));
     if (!map) return nullptr;
 

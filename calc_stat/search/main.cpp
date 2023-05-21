@@ -10,7 +10,7 @@ int main() {
 
     HashMap *hashmap = hashmap_create(crc32_hash, dict.pairs_amount);
     fill_hashmap(&dict, hashmap);
-    get_time(hashmap, dict);
+    get_time(hashmap, &dict);
 
     hashmap_dtor(hashmap);
     free(input.data);
