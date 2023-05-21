@@ -35,7 +35,7 @@ void get_and_report_all_distributions(Pairs dict) {
 
 static void get_and_report_distribution(hashfunc_t hashfunc, Pairs dict, const char *hashfunc_name) {
     HashMap *hashmap = hashmap_create(hashfunc, HASHMAP_SIZE);
-    fill_hashmap(dict, hashmap);
+    fill_hashmap(&dict, hashmap);
     size_t sizes[HASHMAP_SIZE] = {};
     get_distribution(hashmap->array, sizes);
     print_distribution(hashfunc_name, sizes);

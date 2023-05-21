@@ -3,11 +3,11 @@
 
 #include <stdio.h>
 
-const size_t MAX_KEY_SIZE = 32;
+const size_t KEY_SIZE = 32;
 const size_t INITIAL_LIST_SIZE = 1;
 
 struct Node {
-    char key[MAX_KEY_SIZE] = "";
+    char key[KEY_SIZE] = "";
     const char *value = nullptr;
 };
 

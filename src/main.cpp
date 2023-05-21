@@ -12,7 +12,7 @@ int main() {
     HashMap *hashmap = hashmap_create(gnu_hash, HASHMAP_SIZE);
     Input input = get_input(INPUT_FILENAME);
     Pairs dict  = get_pairs(input);
-    fill_hashmap(dict, hashmap);
+    fill_hashmap(&dict, hashmap);
     printf("%s %s!\n", hashmap_find(hashmap, "hello"), hashmap_find(hashmap, "world"));
     hashmap_dtor(hashmap);
     free(input.data);

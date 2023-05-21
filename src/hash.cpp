@@ -80,6 +80,7 @@ hash_t gnu_hash(const char *key) {
 }
 
 hash_t crc32_hash(const char *key) {
+    assert(key);
     hash_t hash = 0;
 
     hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 0));

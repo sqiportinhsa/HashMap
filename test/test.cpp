@@ -14,7 +14,7 @@ const size_t HASHMAP_SIZE = 16127;
 
 void check_hashmap(hashfunc_t hashfunc, Pairs dict) {
     HashMap *hashmap = hashmap_create(hashfunc, HASHMAP_SIZE);
-    fill_hashmap(dict, hashmap);
+    fill_hashmap(&dict, hashmap);
     check_hashmap(hashmap, dict);
     hashmap_dtor(hashmap);
 }

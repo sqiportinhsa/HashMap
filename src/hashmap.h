@@ -6,8 +6,8 @@
 
 struct HashMap {
     hashfunc_t hashfunc = nullptr;
-    List *array = nullptr;
-    size_t array_size = 0;
+    List         *array = nullptr;
+    size_t        array_size  = 0;
 };
 
 HashMap    *hashmap_create  (hashfunc_t hashfunc, size_t array_size);
