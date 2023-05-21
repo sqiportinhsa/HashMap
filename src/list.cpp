@@ -5,7 +5,7 @@
 #include "list.h"
 
 static void list_resize(List *list);
-static int __attribute__((always_inline)) strcmp_asm(const char *srt1, const char *str2);
+static inline int __attribute__((always_inline)) strcmp_asm(const char *srt1, const char *str2);
 
 void list_init(List *list) {
     assert(list);
