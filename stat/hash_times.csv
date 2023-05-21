@@ -1,21 +1,21 @@
-const hash,9.096000
-first_char_hash,9.258000
-char_sum_hash,74.817000
-rol_hash,75.004000
-ror_hash,88.730000
-gnu_hash,87.077000
-crc32_hash,592.172000
-const hash,9.034000
-first_char_hash,9.231000
-char_sum_hash,74.198000
-rol_hash,77.278000
-ror_hash,88.955000
-gnu_hash,87.039000
-crc32_hash,591.434000
-const hash,9.257000
-first_char_hash,9.445000
-char_sum_hash,78.046000
-rol_hash,77.922000
-ror_hash,93.414000
-gnu_hash,90.843000
-crc32_hash,604.658000
+const hash,8.246000
+first_char_hash,8.559000
+char_sum_hash,138.631000
+rol_hash,217.082000
+ror_hash,180.835000
+gnu_hash,261.462000
+crc32_hash,2746.928000
+const hash,9.402000
+first_char_hash,9.449000
+char_sum_hash,138.110000
+rol_hash,218.999000
+ror_hash,178.484000
+gnu_hash,258.693000
+crc32_hash,2725.123000
+const hash,8.253000
+first_char_hash,8.534000
+char_sum_hash,138.342000
+rol_hash,213.666000
+ror_hash,178.817000
+gnu_hash,258.406000
+crc32_hash,2714.229000

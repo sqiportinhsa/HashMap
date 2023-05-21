@@ -81,22 +81,31 @@ hash_t gnu_hash(const char *key) {
 
 hash_t crc32_hash(const char *key) {
     assert(key);
-    hash_t hash = 0;
+    unsigned char sym = *key;
+    hash_t        crc = 0xFFFFFFFF; 
+    hash_t       mask = 0;
 
-    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 0));
-    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 1));
-    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 2));
-    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 3));
+    while (sym != 0) {
+        crc = crc ^ sym;
 
-    return hash;
+        for (int j = 7; j >= 0; j--) {
+            mask = -(crc & 1);
+            crc = (crc >> 1) ^ (CRC32_CONST & mask);
+        }
+
+        ++key;
+        sym = *key;
+    }
+
+    return ~crc;
 }
 
-static hash_t rol(hash_t val) {
+static inline hash_t rol(hash_t val) {
     hash_t new_val = (val << 1) | (val >> SHIFT);
     return new_val;
 }
 
-static hash_t ror(hash_t val) {
+static inline hash_t ror(hash_t val) {
     hash_t new_val = (val >> 1) | (val << SHIFT);
     return new_val;
 }
