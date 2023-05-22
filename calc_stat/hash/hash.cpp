@@ -11,7 +11,7 @@ const size_t REPEAT_TIMES = 100;
 static double get_time(hashfunc_t hashfunc, Pairs pairs);
 
 static void get_and_report_distribution(hashfunc_t hashfunc, Pairs dict, const char *hashfunc_name);
-static void          print_distribution(const char *hashfunc_name, size_t *sizes);
+static void print_distribution(const char *hashfunc_name, size_t *sizes, HashMap *hashmap);
 static void            get_distribution(List *lists,               size_t *sizes);
 
 
@@ -38,13 +38,17 @@ static void get_and_report_distribution(hashfunc_t hashfunc, Pairs dict, const c
     fill_hashmap(&dict, hashmap);
     size_t sizes[HASHMAP_SIZE] = {};
     get_distribution(hashmap->array, sizes);
-    print_distribution(hashfunc_name, sizes);
+    print_distribution(hashfunc_name, sizes, hashmap);
     hashmap_dtor(hashmap);
 }
 
-static void print_distribution(const char *hashfunc_name, size_t *sizes) {
+static void print_distribution(const char *hashfunc_name, size_t *sizes, HashMap *hashmap) {
     for (size_t i = 0; i < HASHMAP_SIZE; ++i) {
-        printf("%s,%zu,%zu\n", hashfunc_name, i, sizes[i]);
+        printf("%s,%zu,%zu", hashfunc_name, i, sizes[i]);
+        for (size_t w = 0; w < sizes[i]; ++w) {
+            printf(",%s", hashmap->array[i].nodes[w].key);
+        }
+        printf("\n");
     }
 }
 

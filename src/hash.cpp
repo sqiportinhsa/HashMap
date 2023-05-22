@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <immintrin.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "hash.h"
 
@@ -35,6 +36,11 @@ hash_t char_sum_hash(const char *key) {
     }
 
     return sum;
+}
+
+hash_t strlen_hash(const char *key) {
+    assert(key);
+    return strlen(key);
 }
 
 hash_t rol_hash(const char *key) {
