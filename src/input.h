@@ -19,7 +19,7 @@ struct Pairs {
 };
 
 Input get_input(const char *filename);
-Pairs get_pairs(Input input);
-void fill_hashmap(Pairs dict, HashMap *hashmap);
+Pairs get_pairs(Input *input);
+void fill_hashmap(Pairs *dict, HashMap *hashmap);
 
 #endif

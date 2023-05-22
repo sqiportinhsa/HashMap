@@ -13,6 +13,11 @@ static size_t skip_to_newline(char *pointer);
 Input get_input(const char *filename) {
     Input input = {};
     input.size = count_elements_in_file(filename);
+    if (input.size == 0) {
+        printf("error: cannot find input file");
+        return input;
+    }
+
     input.data = (char*) calloc(input.size, sizeof(char));
     if (!input.data) return input;
 
@@ -20,37 +25,52 @@ Input get_input(const char *filename) {
     return input;
 }
 
-void fill_hashmap(Pairs dict, HashMap *hashmap) {
-    for (size_t i = 0; i < dict.pairs_amount; ++i) {
-        hashmap_insert(hashmap, dict.pairs[i].key, dict.pairs[i].value);
+void fill_hashmap(Pairs *dict, HashMap *hashmap) {
+    assert(dict && hashmap);
+    assert(dict->pairs);
+
+    for (size_t i = 0; i < dict->pairs_amount; ++i) {
+        hashmap_insert(hashmap, dict->pairs[i].key, dict->pairs[i].value);
     }
 }
 
-Pairs get_pairs(Input input) {
+Pairs get_pairs(Input *input) {
+    assert(input && "nullptr to input");
+    assert(input->data && "nullptr to input->data");
+
     Pairs pairs  = {};
-    pairs.pairs  = (Pair*) calloc(input.size / 2, sizeof(Pair));
+    pairs.pairs  = (Pair*) calloc(input->size / KEY_SIZE, sizeof(Pair));
+    if (!pairs.pairs) {
+        return pairs;
+    }
+
     size_t shift = 0;
+    char *key   = nullptr;
+    char *value = nullptr;
 
-    while (shift < input.size) {
+    while (shift < input->size) {
         size_t key_len = 0;
-        char *key = input.data + shift;
-        key_len = shift_to_next_string(input.data + shift);
-        shift += key_len;
+        key = input->data + shift;
+        shift += KEY_SIZE;
 
-        char *value = input.data + shift;
-        shift += shift_to_next_string(input.data + shift);
-
-        if (key_len <= 32) {
-            pairs.pairs[pairs.pairs_amount].key   = key;
-            pairs.pairs[pairs.pairs_amount].value = value;
-            ++pairs.pairs_amount;
+        if (*key == '\0') {
+            break;
         }
+
+        value = input->data + shift;
+        shift += shift_to_next_string(input->data + shift);
+
+        pairs.pairs[pairs.pairs_amount].key   = key;
+        pairs.pairs[pairs.pairs_amount].value = value;
+        ++pairs.pairs_amount;
     }
 
     return pairs;
 }
 
 static size_t shift_to_next_string(char *ptr) {
+    assert(ptr && "pointer is nullptr");
+
     size_t shift = skip_to_newline(ptr);
     *(ptr + shift) = '\0';
     ++shift;

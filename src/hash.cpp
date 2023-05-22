@@ -1,5 +1,7 @@
 #include <assert.h>
+#include <immintrin.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "hash.h"
 
@@ -34,6 +36,11 @@ hash_t char_sum_hash(const char *key) {
     }
 
     return sum;
+}
+
+hash_t strlen_hash(const char *key) {
+    assert(key);
+    return strlen(key);
 }
 
 hash_t rol_hash(const char *key) {
@@ -79,31 +86,23 @@ hash_t gnu_hash(const char *key) {
 }
 
 hash_t crc32_hash(const char *key) {
-    unsigned char sym = *key;
-    unsigned int  crc = 0xFFFFFFFF; 
-    unsigned int mask = 0;
+    assert(key);
+    hash_t hash = 0;
 
-    while (sym != 0) {
-        crc = crc ^ sym;
+    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 0));
+    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 1));
+    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 2));
+    hash = _mm_crc32_u32(hash, *((const uint64_t *)key + 3));
 
-        for (int j = 7; j >= 0; j--) {
-            mask = -(crc & 1);
-            crc = (crc >> 1) ^ (CRC32_CONST & mask);
-        }
-
-        ++key;
-        sym = *key;
-    }
-
-    return ~crc;
+    return hash;
 }
 
-static hash_t rol(hash_t val) {
+static inline hash_t rol(hash_t val) {
     hash_t new_val = (val << 1) | (val >> SHIFT);
     return new_val;
 }
 
-static hash_t ror(hash_t val) {
+static inline hash_t ror(hash_t val) {
     hash_t new_val = (val >> 1) | (val << SHIFT);
     return new_val;
 }
